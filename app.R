@@ -21,8 +21,8 @@ ui <- fluidPage(
   tabsetPanel(
     # Tab 1: Prizes
     tabPanel("Prizes",
-             h4("Prizes"),
-             h5("A list of all prizes"),
+             h3("Prizes"),
+             h4("A list of all prizes"),
              tableOutput("glimpsetable")),
     
     # Tab 2: Prize Years
@@ -33,7 +33,7 @@ ui <- fluidPage(
     # Tab 3: Prize Institutions
     tabPanel("Prize Institutions",
              h3("Prize Institutions"),
-             h4("Top 1 Institutions"),
+             h4("Top 1 Institution"),
              h5("Based on how many prizes they administer"),
              tableOutput("topinst"),
              plotOutput("instplot")),
@@ -71,6 +71,8 @@ ui <- fluidPage(
     tabPanel("Author Academic Field",
              h3("Author Academic Field"),
              selectInput("winner", label = "Winner only?", choices = c("Yes", "No")),
+             h4("Top 3 Academic Fields"),
+             h5("Based on how many prize winners are from the field"),
              tableOutput("topfield"),
              plotOutput("fieldplot")),
     )
@@ -138,7 +140,9 @@ server <- function(input, output, session){
   output$instplot <- renderPlot({
     inst() %>%
       ggplot(aes(x=Inst, y=Count)) +
-      geom_bar(stat="identity") 
+      geom_bar(stat="identity") +
+      labs(x = "Institution",
+           y = "# of Prizes")
   })
   
   
